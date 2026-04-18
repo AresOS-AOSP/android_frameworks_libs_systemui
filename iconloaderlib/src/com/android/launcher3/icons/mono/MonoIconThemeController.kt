@@ -156,9 +156,12 @@ class MonoIconThemeController(
         // preserved in constantState
         // Inset the drawable according to the AdaptiveIconDrawable layers
         val monoDrawable =
-            BitmapDrawable(themedBitmap.mono).apply {
-                colorFilter = BlendModeColorFilter(colors[1], SRC_IN)
-            }
+            InsetDrawable(
+                BitmapDrawable(themedBitmap.mono).apply {
+                    colorFilter = BlendModeColorFilter(colors[1], SRC_IN)
+                },
+                getExtraInsetFraction() / (1 + 2 * getExtraInsetFraction()),
+            )
         return AdaptiveIconDrawable(ColorDrawable(colors[0]), monoDrawable)
     }
 }
